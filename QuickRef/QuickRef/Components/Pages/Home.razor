@@ -1,5 +1,29 @@
 ﻿@page "/"
-
 <PageTitle>QuickRef</PageTitle>
 
-<QuickRef.Components.Quickref.NoteView Notes="@([new("Note1", "Hello World"), new("Note2", "Hello World"), new("Note3", "Hello World")])" />
+<MatDrawerContainer Style="width: 100vw; height:100vh;">
+    <MatDrawer @bind-Opened="@_drawerOpen">
+        Hello, this is the drawer
+    </MatDrawer>
+    <MatDrawerContent>
+        <MatIconButton Class="menu-button" @bind-Toggled="@_drawerOpen">
+            @if (_drawerOpen)
+            {
+                <i class="material-symbols-outlined">
+                    close
+                </i>
+            }
+            else
+            {
+                <i class="material-symbols-outlined">
+                    menu
+                </i>
+            }
+        </MatIconButton>
+        <QuickRef.Components.Quickref.NoteView Notes="@([new("Note1", "Hello World"), new("Note2", "Hello World"), new("Note3", "Hello World")])" />
+    </MatDrawerContent>
+</MatDrawerContainer>
+
+@code{
+    private bool _drawerOpen = false;
+}
