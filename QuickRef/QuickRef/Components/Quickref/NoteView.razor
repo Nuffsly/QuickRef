@@ -1,0 +1,47 @@
+﻿@using QuickRef.Models
+
+<div class="note-view-container">
+    @for (int currentColumn = 0; currentColumn < ColumnCount; currentColumn++)
+    {
+        <div class="note-view-column">
+            @foreach (var note in GetNotesForColumn(_filteredNotes, currentColumn, ColumnCount))
+            {
+                <NoteComponent Note="note" />
+            }
+        </div>
+    }
+</div>
+
+@code {
+    #nullable enable
+
+    private List<UserNote> _filteredNotes = [];
+
+    [Parameter, EditorRequired]
+    public List<UserNote> Notes { get; set; } = [];
+
+    [Parameter]
+    public int ColumnCount { get; set; } = 5;
+
+    protected override void OnParametersSet()
+    {
+        // Filter notes according to user preferences.
+        _filteredNotes = Notes;
+        base.OnParametersSet();
+    }
+
+    private List<UserNote> GetNotesForColumn(List<UserNote> notes, int currentColumn, int totalColumns)
+    {
+        if (currentColumn >= notes.Count)
+            return [];
+        else if (totalColumns > notes.Count)
+            return [notes[currentColumn]];
+
+        var startIndex = (int) Math.Ceiling((float)notes.Count / (float)totalColumns) * currentColumn;
+        var count = notes.Count / totalColumns;
+        if (notes.Count % totalColumns != 0 && currentColumn == 0)
+            count += notes.Count % totalColumns;
+
+        return notes.GetRange(startIndex, count);
+    }
+}

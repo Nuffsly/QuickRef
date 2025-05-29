@@ -1,0 +1,12 @@
+﻿.note-view-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+.note-view-column {
+    display: flex;
+    flex-direction: column;
+}

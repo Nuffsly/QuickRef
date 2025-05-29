@@ -1,0 +1,13 @@
+﻿@using QuickRef.Models
+<div class="note-component">
+    <text class="title-text">@Note.Title</text>
+    <text class="body-text">@Note.Content</text>
+    <text class="date-text">@Note.Created</text>
+</div>
+
+@code {
+    #nullable enable
+
+    [Parameter, EditorRequired]
+    public UserNote Note { get; set; }
+}
