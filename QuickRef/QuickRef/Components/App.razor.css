@@ -12,12 +12,6 @@ body {
     padding: 0.5em;
 }
 
-.menu-button {
-    position: absolute;
-    top: 0.5em;
-    left: 0.5em;
-}
-
 /* 1. Use a more-intuitive box-sizing model */
 *, *::before, *::after {
     box-sizing: border-box;

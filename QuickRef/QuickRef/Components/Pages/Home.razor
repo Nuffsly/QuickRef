@@ -1,9 +1,8 @@
 ﻿@page "/"
 <PageTitle>QuickRef</PageTitle>
-
-<MatDrawerContainer Style="width: 100vw; height:100vh;">
+<MatDrawerContainer Class="drawer-menu">
     <MatDrawer @bind-Opened="@_drawerOpen">
-        Hello, this is the drawer
+        <MatSlideToggle Class="edit-mode-toggle" Label="Edit Mode" @bind-Value="@_editMode"></MatSlideToggle>
     </MatDrawer>
     <MatDrawerContent>
         <MatIconButton Class="menu-button" @bind-Toggled="@_drawerOpen">
@@ -20,10 +19,11 @@
                 </i>
             }
         </MatIconButton>
-        <QuickRef.Components.Quickref.NoteView Notes="@([new("Note1", "Hello World"), new("Note2", "Hello World"), new("Note3", "Hello World")])" />
+        <QuickRef.Components.Quickref.NoteView Notes="@([new("Note1", "Hello World"), new("Note2", "Hello World"), new("Note3", "Hello World")])" EditMode="@_editMode" />
     </MatDrawerContent>
 </MatDrawerContainer>
 
 @code{
     private bool _drawerOpen = false;
+    private bool _editMode = false;
 }

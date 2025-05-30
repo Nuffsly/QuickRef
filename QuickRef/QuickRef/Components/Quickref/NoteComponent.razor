@@ -1,13 +1,35 @@
 ﻿@using QuickRef.Models
-<div class="note-component">
-    <text class="title-text">@Note.Title</text>
-    <text class="body-text">@Note.Content</text>
-    <text class="date-text">@Note.Created</text>
-</div>
+@using Constants
+<MatThemeProvider Theme="@(new() { Surface = "#0000" })">
+    <div class="note-component">
+        <MatTextField Required="true" Style="@(EditMode ? "" : "pointer-events:none;")" PlaceHolder="Title" InputClass="title-text" @bind-Value="@Note.Title"></MatTextField>
+        <MatTextField @bind-Value="@Note.Content" InputClass="body-text" OnKeyPress="@(() => StateHasChanged())" Style="@GetNoteBodyStyle(Note)" TextArea="true" FullWidth="true" PlaceHolder="@RandomPlaceholder()"></MatTextField>
+        <text class="date-text">@Note.Created</text>
+    </div>
+</MatThemeProvider>
 
 @code {
     #nullable enable
 
     [Parameter, EditorRequired]
     public UserNote Note { get; set; }
+
+    [Parameter, EditorRequired]
+    public bool EditMode { get; set; } = false;
+
+    private string RandomPlaceholder()
+    {
+        var random = new Random();
+        return ConstantAssets.NoteQuotes[random.Next(ConstantAssets.NoteQuotes.Length)];
+    }
+
+    private string GetNoteBodyStyle(UserNote note)
+    {
+        var style = "";
+        var rows = note.Content.Split('\n').Length * 5;
+        style += $"height: {rows}rem; ";
+        // Disable if edit mode is active
+        style += EditMode ? "" : "pointer-events:none; ";
+        return style;
+    }
 }

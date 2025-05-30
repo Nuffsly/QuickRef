@@ -6,7 +6,7 @@
         <div class="note-view-column">
             @foreach (var note in GetNotesForColumn(_filteredNotes, currentColumn, ColumnCount))
             {
-                <NoteComponent Note="note" />
+                <NoteComponent Note="note" EditMode="@EditMode" />
             }
         </div>
     }
@@ -20,8 +20,11 @@
     [Parameter, EditorRequired]
     public List<UserNote> Notes { get; set; } = [];
 
+    [Parameter, EditorRequired]
+    public bool EditMode { get; set; } = false;
+
     [Parameter]
-    public int ColumnCount { get; set; } = 5;
+    public int ColumnCount { get; set; } = 2;
 
     protected override void OnParametersSet()
     {
